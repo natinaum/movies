@@ -20,7 +20,7 @@ int count(char * INPUT,char muster){
 
 TABLE fromCSV(char * INPUT){
 	int L=count(INPUT,'\n');
-	int x=L+2;
+	int x=L+1;
 	int C=count(INPUT,',');
 	int y=(C+x-1)/(x-1);
 	printf("x: %d\ty: %d\n",x,y);
@@ -117,16 +117,37 @@ TABLE read(char * path){
 	int sz = ftell(f);
 	rewind(f);
 	char * content = malloc(sz*sizeof(char *));
-	while(fgets(content,sz,f)!=NULL);
+	*content=0;
+	char * tmp=malloc(50);
+	while(fgets(tmp,sz,f)!=NULL)
+		strcat(content,tmp);
+	fclose(f);
 	return fromCSV(content);
 }
 
+_Bool write(char * path, TABLE INPUT){
+	printf("TO STRING:\n");
+	char * string = toCSV(INPUT);
+	printf("OPEN FILE:\n");
+	FILE * F = fopen(path, "w");
+	if(F==NULL){
+		fputs("FAILED TO OPEN FILE",stderr);
+		return 0;
+	}
+	printf("write File:\n");
+	int i = 0;
+	while(string[i]!=0){
+		fputc(string[i],F);
+	}
+	printf("close File:\n");
+	fclose(F);
+	return 1;
+}
 
 
 int main(){
-	char *** TEST=read(PATH);
-	char * Test2=toCSV(TEST);
-	printf("%s",Test2);
+	char * * * TEST=read(PATH);
+	write("./Test.csv",TEST);
 	return 0;
 
 
