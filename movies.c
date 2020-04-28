@@ -135,10 +135,7 @@ _Bool write(char * path, TABLE INPUT){
 		return 0;
 	}
 	printf("write File:\n");
-	int i = 0;
-	while(string[i]!=0){
-		fputc(string[i],F);
-	}
+	fputs(string,F);//PROBLEM: malloc says invalid size and i dont know what the fuck this should mean ... (PLS KILL ME NOW)
 	printf("close File:\n");
 	fclose(F);
 	return 1;
