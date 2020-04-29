@@ -6,7 +6,7 @@
 #define PATH "./Movies.csv"
 
 
-int count(char * INPUT,char muster){
+int count(char * INPUT,char muster){ //counts how often a given character is found in INPUT
 	int c=0;
 	int i=0;
 	while(INPUT[i]!=0){
@@ -18,11 +18,12 @@ int count(char * INPUT,char muster){
 	return c;
 }
 
-TABLE fromCSV(char * INPUT){
-	int L=count(INPUT,'\n');
-	int x=L+1;
-	int C=count(INPUT,',');
-	int y=(C+x-1)/(x-1);
+TABLE fromCSV(char * INPUT){//translates a plain csv string into a rectangular array
+	int L=count(INPUT,'\n');//counts lines 
+	int x=L+1;//calculate x dimension off TABLE
+	int C=count(INPUT,',');//counts , cause , are field delimiter in csv
+	int y=(C+x-1)/(x-1);//calculate y dimension
+	//Reserve Space for Table:
 	printf("x: %d\ty: %d\n",x,y);
 	TABLE OUTPUT=malloc(sizeof(TABLE)*x);
 	for(int i=0;i<x;i++){
@@ -33,6 +34,7 @@ TABLE fromCSV(char * INPUT){
 			OUTPUT[i][j]=malloc(sizeof(char *));
 		}
 	}
+	//go through csv string and write each line and field in own array field
 	int i=-1;
 	int a=0;
 	int b=0;
@@ -62,13 +64,15 @@ TABLE fromCSV(char * INPUT){
 			c=0;
 		}
 	}
+	//Add End Marker
 	i++;
 	OUTPUT[x-1][0]=END;
-
+	//return
 	return OUTPUT;
 }
 
 int CSVstrLen(TABLE INPUT){
+	//Takes Table and calculate how many characters a csv version would have
 	int length=0;
 	for(int i=0;strcmp(INPUT[i][0],END);i++){
 		for(int j=0;j<3;j++){
@@ -78,7 +82,7 @@ int CSVstrLen(TABLE INPUT){
 	}
 	return length;
 }
-char * toCSV(TABLE INPUT){
+char * toCSV(TABLE INPUT){//takes table and return string in csv format
 	int c=0;
 	int k=0;
 	int l=CSVstrLen(INPUT);
@@ -108,21 +112,26 @@ char * toCSV(TABLE INPUT){
 	return OUTPUT;
 }
 
-TABLE read(char * path){
+TABLE read(char * path){//read file with csv and returns a TABLE
+	//Open File and check if process was successfull
 	FILE *f = fopen(path,"r");
 	if(f==NULL){
 		fputs("OPEN FILE FAILED\n", stderr);
 		return NULL;
 	}
+	//get file length
 	fseek(f, 0L, SEEK_END);
 	int sz = ftell(f);
 	rewind(f);
+	// reserve space for File Content and tmp
 	char * content = malloc(sz*sizeof(char *));
 	*content=0;
 	char * tmp=malloc(50);
+	//read file into content and close file
 	while(fgets(tmp,sz,f)!=NULL)
 		strcat(content,tmp);
 	fclose(f);
+	//return TABLE generated from content String
 	return fromCSV(content);
 }
 
