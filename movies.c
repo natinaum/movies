@@ -82,7 +82,7 @@ char * toCSV(TABLE INPUT){
 	int c=0;
 	int k=0;
 	int l=CSVstrLen(INPUT);
-	char * OUTPUT = malloc(l*sizeof(char *));
+	char * OUTPUT = malloc(+l*sizeof(char *));
 	for(int i=0;strcmp(INPUT[i][0],END);i++){
 		for(int j=0;j<3;j++){
 			k=0;
@@ -145,7 +145,7 @@ _Bool write(char * path, TABLE INPUT){
 
 
 int main(){
-	char * * * TEST=read(PATH);
+	TABLE TEST=read(PATH);
 	write("./Test.csv",TEST);
 	return 0;
 
