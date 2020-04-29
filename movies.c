@@ -104,6 +104,7 @@ char * toCSV(TABLE INPUT){
 		OUTPUT[c]='\n';
 		c++;
 	}
+	OUTPUT[c]=0;
 	return OUTPUT;
 }
 
@@ -127,17 +128,18 @@ TABLE read(char * path){
 
 _Bool write(char * path, TABLE INPUT){
 	printf("TO STRING:\n");
-	char * string = toCSV(INPUT);
 	printf("OPEN FILE:\n");
-	FILE * F = fopen(path, "w");
-	if(F==NULL){
+	FILE * FP = fopen("./why", "w");
+	if(FP==NULL){
 		fputs("FAILED TO OPEN FILE",stderr);
 		return 0;
 	}
+	fprintf(FP,"%s",toCSV(INPUT));
 	printf("write File:\n");
-	fputs(string,F);//PROBLEM: malloc says invalid size and i dont know what the fuck this should mean ... (PLS KILL ME NOW)
+	//fputs(FP);//PROBLEM: malloc says invalid size and i dont know what the fuck this should mean ... (PLS KILL ME NOW)
+	//Only fputs,fprintf,fputc or only toCSV is fine, but both, not even in direct combination, dont work ...
 	printf("close File:\n");
-	fclose(F);
+	fclose(FP);
 	return 1;
 }
 
