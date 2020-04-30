@@ -185,24 +185,31 @@ void show(int id, int f,TABLE INPUT){
 }
 
 TABLE add(char ** entry, TABLE INPUT){
+	printf("add1\n");
 	int sz=0;
-	while(strcmp(INPUT[SZ][0],END))SZ++;
+	while(strcmp(INPUT[sz][0],END))sz++;
 	TABLE OUTPUT=malloc(sizeof(TABLE)*(sz+2));
 	for(int i=0;i<sz;i++){
 		OUTPUT[i]=INPUT[i];
 	}
+	printf("add2\n");
 	OUTPUT[sz]=entry;
+	printf("add3\n");
 	OUTPUT[sz+1]=malloc(sizeof(char**)*3);
-	OUTPUT[sz+1][0]=malloc(sizeof(char)*10);
-	OUTPUT[sz+1][0]=END;
+	printf("add4\n");
+	OUTPUT[sz+1][0]=malloc(sizeof(char*)*10);
+	printf("add5\n");
+	OUTPUT[sz+1][0][0]=0;
+	strcat(OUTPUT[sz+1][0],END);
+	return OUTPUT;
 }
 
 
 int main(){
 	char ** entry=malloc(3*sizeof(char*));
-	entry[0]=malloc(10*sizeof(char));
-	entry[1]=malloc(10*sizeof(char));
-	entry[2]=malloc(10*sizeof(char));
+	entry[0]="Film";
+	entry[1]="Watched";
+	entry[2]="RATING";
 	TABLE TEST=read(PATH);
 	show(0,0,add(entry,TEST));
 	write("./Test.csv",TEST);
