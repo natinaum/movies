@@ -31,7 +31,7 @@ TABLE fromCSV(char * INPUT){//translates a plain csv string into a rectangular a
 	}
 	for(int i=0;i<x;i++){
 		for(int j=0;j<y;j++){
-			OUTPUT[i][j]=malloc(sizeof(char *));
+			OUTPUT[i][j]=malloc(sizeof(char)*200);
 		}
 	}
 	//go through csv string and write each line and field in own array field
@@ -76,7 +76,7 @@ int CSVstrLen(TABLE INPUT){
 	int length=0;
 	for(int i=0;strcmp(INPUT[i][0],END);i++){
 		for(int j=0;j<3;j++){
-			length=strlen(INPUT[i][j])+3;
+			length=length+strlen(INPUT[i][j])+3;
 		}
 		length=length+1;
 	}
@@ -128,7 +128,7 @@ TABLE read(char * path){//read file with csv and returns a TABLE
 	*content=0;
 	char * tmp=malloc(50);
 	//read file into content and close file
-	while(fgets(tmp,sz,f)!=NULL)
+	while(fgets(tmp,50,f)!=NULL)
 		strcat(content,tmp);
 	fclose(f);
 	//return TABLE generated from content String
@@ -138,7 +138,7 @@ TABLE read(char * path){//read file with csv and returns a TABLE
 _Bool write(char * path, TABLE INPUT){
 	printf("TO STRING:\n");
 	printf("OPEN FILE:\n");
-	FILE * FP = fopen("./why", "w");
+	FILE * FP = fopen(path, "w");
 	if(FP==NULL){
 		fputs("FAILED TO OPEN FILE",stderr);
 		return 0;
