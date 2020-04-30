@@ -147,7 +147,7 @@ _Bool write(char * path, TABLE INPUT){
 
 void show(int id, int f,TABLE INPUT){
 	if(id == 0){
-		int max[3]={1};
+		int max[3]={0};
 		int len;
 		for(int i=0;strcmp(INPUT[i][0],END);i++){
 			for(int j=0;j<3;j++){
@@ -163,7 +163,7 @@ void show(int id, int f,TABLE INPUT){
 			if(i>0) printf("%3d  ",i); else printf(" id  ");
 			for(int j=0;j<3;j++){
 				printf("%s",INPUT[i][j]);
-				for(int k=0;k<max[j]-strlen(INPUT[i][j]);k++)
+				for(int k=0;k<4+max[j]-strlen(INPUT[i][j]);k++)
 					printf(" ");
 	
 
