@@ -147,7 +147,7 @@ _Bool write(char * path, TABLE INPUT){
 
 void show(int id, int f,TABLE INPUT){
 	if(id == 0){
-		int max[3]={0};
+		int max[3]={1};
 		int len;
 		for(int i=0;strcmp(INPUT[i][0],END);i++){
 			for(int j=0;j<3;j++){
