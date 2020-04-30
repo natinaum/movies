@@ -184,11 +184,27 @@ void show(int id, int f,TABLE INPUT){
 	return;
 }
 
+TABLE add(char ** entry, TABLE INPUT){
+	int sz=0;
+	while(strcmp(INPUT[SZ][0],END))SZ++;
+	TABLE OUTPUT=malloc(sizeof(TABLE)*(sz+2));
+	for(int i=0;i<sz;i++){
+		OUTPUT[i]=INPUT[i];
+	}
+	OUTPUT[sz]=entry;
+	OUTPUT[sz+1]=malloc(sizeof(char**)*3);
+	OUTPUT[sz+1][0]=malloc(sizeof(char)*10);
+	OUTPUT[sz+1][0]=END;
+}
+
+
 int main(){
+	char ** entry=malloc(3*sizeof(char*));
+	entry[0]=malloc(10*sizeof(char));
+	entry[1]=malloc(10*sizeof(char));
+	entry[2]=malloc(10*sizeof(char));
 	TABLE TEST=read(PATH);
-	show(0,0,TEST);
+	show(0,0,add(entry,TEST));
 	write("./Test.csv",TEST);
 	return 0;
-
-
 }
