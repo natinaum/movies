@@ -24,7 +24,6 @@ TABLE fromCSV(char * INPUT){//translates a plain csv string into a rectangular a
 	int C=count(INPUT,',');//counts , cause , are field delimiter in csv
 	int y=(C+x-1)/(x-1);//calculate y dimension
 	//Reserve Space for Table:
-	printf("x: %d\ty: %d\n",x,y);
 	TABLE OUTPUT=malloc(sizeof(TABLE)*x);
 	for(int i=0;i<x;i++){
 		OUTPUT[i]=malloc(sizeof(char * *)*y);
@@ -136,25 +135,58 @@ TABLE read(char * path){//read file with csv and returns a TABLE
 }
 
 _Bool write(char * path, TABLE INPUT){
-	printf("TO STRING:\n");
-	printf("OPEN FILE:\n");
 	FILE * FP = fopen(path, "w");
 	if(FP==NULL){
 		fputs("FAILED TO OPEN FILE",stderr);
 		return 0;
 	}
 	fprintf(FP,"%s",toCSV(INPUT));
-	printf("write File:\n");
-	//fputs(FP);//PROBLEM: malloc says invalid size and i dont know what the fuck this should mean ... (PLS KILL ME NOW)
-	//Only fputs,fprintf,fputc or only toCSV is fine, but both, not even in direct combination, dont work ...
-	printf("close File:\n");
 	fclose(FP);
 	return 1;
 }
 
+void show(int id, int f,TABLE INPUT){
+	if(id == 0){
+		int max[3]={0};
+		int len;
+		for(int i=0;strcmp(INPUT[i][0],END);i++){
+			for(int j=0;j<3;j++){
+				len=strlen(INPUT[i][j]);
+				if(max[j]<len){
+					max[j]=len;
+				}
+			}
+		}
+
+
+		for(int i=0;strcmp(INPUT[i][0],END);i++){
+			if(i>0) printf("%3d  ",i); else printf(" id  ");
+			for(int j=0;j<3;j++){
+				printf("%s",INPUT[i][j]);
+				for(int k=0;k<max[j]-strlen(INPUT[i][j]);k++)
+					printf(" ");
+	
+
+			}
+			printf("\n");
+		}
+		return;
+	}
+	if(f==0){
+		printf("%d: ",id);
+		for(int j=0;j<3;j++){
+			printf("%s\t",INPUT[id][j]);
+		}
+		printf("\n");
+		return;
+	}
+	printf("%s",INPUT[id][f-1]);
+	return;
+}
 
 int main(){
 	TABLE TEST=read(PATH);
+	show(0,0,TEST);
 	write("./Test.csv",TEST);
 	return 0;
 
