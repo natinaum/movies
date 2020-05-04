@@ -163,7 +163,7 @@ void show(int id, int f,TABLE INPUT){
 			if(i>0) printf("%3d  ",i); else printf(" id  ");
 			for(int j=0;j<3;j++){
 				printf("%s",INPUT[i][j]);
-				for(int k=0;k<4+max[j]-strlen(INPUT[i][j]);k++)
+				for(int k=0;k<max[j]-strlen(INPUT[i][j]);k++)
 					printf(" ");
 	
 
@@ -185,20 +185,15 @@ void show(int id, int f,TABLE INPUT){
 }
 
 TABLE add(char ** entry, TABLE INPUT){
-	printf("add1\n");
 	int sz=0;
 	while(strcmp(INPUT[sz][0],END))sz++;
 	TABLE OUTPUT=malloc(sizeof(TABLE)*(sz+2));
 	for(int i=0;i<sz;i++){
 		OUTPUT[i]=INPUT[i];
 	}
-	printf("add2\n");
 	OUTPUT[sz]=entry;
-	printf("add3\n");
 	OUTPUT[sz+1]=malloc(sizeof(char**)*3);
-	printf("add4\n");
 	OUTPUT[sz+1][0]=malloc(sizeof(char*)*10);
-	printf("add5\n");
 	OUTPUT[sz+1][0][0]=0;
 	strcat(OUTPUT[sz+1][0],END);
 	return OUTPUT;
@@ -211,7 +206,6 @@ int main(){
 	entry[1]="Watched";
 	entry[2]="RATING";
 	TABLE TEST=read(PATH);
-	show(0,0,add(entry,TEST));
-	write("./Test.csv",TEST);
+	write("./Test.csv",add(entry,TEST));
 	return 0;
 }
